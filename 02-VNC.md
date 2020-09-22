@@ -35,5 +35,15 @@ systemctl start vncserver@:1.service
 [root@localhost user]# firewall-cmd --permanent --add-service="vnc-server" --zone="public"
 [root@localhost user]# firewall-cmd --reload
 ```
+# 伺服器不能運作
+1. 看是否正常運作    
+systemctl status <伺服器名稱,ex sshd>
+2. getenforce    看看是否為 Disabled    若不是，修改 /etc/selinux/config
+```
+SELINUX=disable
+```
+3. 看看防火牆關閉了沒    systemctl status firewalld
 # 雜記
 * vim內d d可以刪除整行
+* [99.999% & 99.99%](https://en.wikipedia.org/wiki/High_availability#Percentage_calculation)
+
