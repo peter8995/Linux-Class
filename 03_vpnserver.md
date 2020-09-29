@@ -26,6 +26,33 @@ username pptpd password [指定IP、*不指定]
 # 防火牆設定
 * firewall-cmd --add-forward-port=port=1234:proto=tcp:toport=2222
   * 讓外部連進1234阜時轉移到2222阜
+  
+# 打包&壓縮
+* 先把多個檔案打包，形成tar包
+* 不同的壓縮技術
+  * .tar.gz .tar.xz tar.bz2
+* gz
+```
+[root@localhost ~]# ls
+anaconda-ks.cfg  initial-setup-ks.cfg  testfile
+[root@localhost ~]# gzip testfile
+[root@localhost ~]# ls
+anaconda-ks.cfg  initial-setup-ks.cfg  testfile.gz
+[root@localhost ~]# gunzip testfile.gz
+[root@localhost ~]# ls
+anaconda-ks.cfg  initial-setup-ks.cfg  testfile
+```
+* zip
+```
+[root@localhost ~]# ls
+anaconda-ks.cfg  initial-setup-ks.cfg  testfile
+[root@localhost ~]# zip -r testfile.zip testfile
+  adding: testfile (stored 0%)
+[root@localhost ~]# ls
+anaconda-ks.cfg  initial-setup-ks.cfg  testfile  testfile.zip
+```
+
+
 # 移除軟體
 * rpm -e htppd
   * 可能會有相依性問題
