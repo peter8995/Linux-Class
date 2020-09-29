@@ -23,6 +23,9 @@ username pptpd password [指定IP、*不指定]
 ```
 6. systemctl start pptpd
 
+# 防火牆設定
+* firewall-cmd --add-forward-port=port=1234:proto=tcp:toport=2222
+  * 讓外部連進1234阜時轉移到2222阜
 # 移除軟體
 * rpm -e htppd
   * 可能會有相依性問題
