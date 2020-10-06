@@ -35,3 +35,19 @@ Export list for 192.168.23.133:
 ```
 4. mkdir -p /mydata
 5. mount -t nfs 192.168.0.101:/data /mydata
+
+要mount的時候不能在那個資料夾下面
+
+### nfs & httpd server
+1. 將 DocumentRoot 改到 /data
+```
+vim /etc/httpd/conf/httpd.conf
+DocumentRoot "/data"
+<Directory "/data">
+    AllowOverride None
+    # Allow open access:
+    Require all granted
+</Directory>
+```
+2. 重啟httpd server
+
