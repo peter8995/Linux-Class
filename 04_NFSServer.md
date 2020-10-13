@@ -39,15 +39,6 @@ Export list for 192.168.23.133:
 要mount的時候不能在那個資料夾下面
 
 ### nfs & httpd server
-1. 將 DocumentRoot 改到 /data
-```
-vim /etc/httpd/conf/httpd.conf
-DocumentRoot "/data"
-<Directory "/data">
-    AllowOverride None
-    # Allow open access:
-    Require all granted
-</Directory>
-```
+1. mount -t nfs 192.168.23.133:/data /var/www/html
 2. 重啟httpd server
 
