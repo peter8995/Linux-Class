@@ -16,3 +16,5 @@
 * 把配置檔搞爛可以用 rpm -ivh --force重新安裝
 
 # [ngrok](https://blog.alantsai.net/posts/2018/04/devtooltips-5-ngrok-allow-public-to-access-localhost-website-and-sql-server)
+* ./ngrok http 20
+* ./ngrok http --auth=admin:12345 20 
