@@ -119,3 +119,48 @@ ss:cc:vv
 [root@localhost ~]# seq -s "*" 1 5 | bc
 120
 ```
+* uniq
+```
+[root@localhost pentbox-1.8]# cat a.sh
+1
+2
+1
+1
+3
+4
+[root@localhost pentbox-1.8]# sort a.sh
+1
+1
+1
+2
+3
+4
+[root@localhost pentbox-1.8]# sort a.sh | uniq
+1
+2
+3
+4
+```
+* uniq -c 計算資料出現幾次
+```
+[root@localhost pentbox-1.8]# cat a.sh
+1
+2
+1
+1
+3
+2
+2
+3
+4
+[root@localhost pentbox-1.8]# sort a.sh | uniq -c
+      3 1
+      3 2
+      2 3
+      1 4
+```
+* 計算資料內相異的資料有幾行
+```
+[root@localhost pentbox-1.8]# sort a.sh | uniq | wc -l
+4
+```
