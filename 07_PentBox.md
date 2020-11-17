@@ -53,6 +53,64 @@
 1*2*3*4*5
 ```
 
+# sort
+```
+[root@localhost pentbox-1.8]# cat a.sh
+123 3
+23 2
+56 1
+1 6
+
+[root@localhost pentbox-1.8]# sort a.sh
+123 3
+1 6
+23 2
+56 1
+```
+* -n 依數字排列
+```
+[root@localhost pentbox-1.8]# sort -n a.sh
+1 6
+23 2
+56 1
+123 3
+```
+* -r 倒序
+```
+[root@localhost pentbox-1.8]# sort -nr a.sh
+123 3
+56 1
+23 2
+1 6
+```
+* -k
+```
+[root@localhost pentbox-1.8]# sort -n -k2 a.sh
+56 1
+23 2
+123 3
+1 6
+```
+* 與head awk合用
+```
+[root@localhost pentbox-1.8]# sort -n -k1 -r a.sh | head -1 | awk '{print $1}'
+123
+```
+* -t 以某字符為分割符
+```
+[root@localhost pentbox-1.8]# cat a.sh
+qq:aa:bb
+ss:cc:vv
+aa:bb:mm
+dd:cc:bb
+[root@localhost pentbox-1.8]# sort -t: -k2 a.sh
+qq:aa:bb
+aa:bb:mm
+dd:cc:bb
+ss:cc:vv
+```
+
+
 # 雜記
 * bc
 ```
