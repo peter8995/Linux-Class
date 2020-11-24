@@ -1,3 +1,8 @@
+# alias
+* 別名
+* unalias 刪除別名
+* alias [rm -i]="[rm]"
+
 # 雜記
 * 設定主機名稱:hostnamectl set-hostname
 * 設定IP 
