@@ -7,4 +7,4 @@
 ```
 [root@localhost user]# echo "test mail" | mail -s "hello" s110710518@student.nqu.edu.tw
 ```
-就會收到信件
+>就會收到信件
