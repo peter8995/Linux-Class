@@ -52,5 +52,23 @@ PING 192.168.100.254 (192.168.100.254) 56(84) bytes of data.
 rtt min/avg/max/mdev = 0.282/0.392/0.466/0.078 ms
 ```
 
+# echo
+```
+[root@localhost ~]# a=5
+[root@localhost ~]# echo $a
+5
+[root@localhost ~]# echo "a=$a"
+a=5
+[root@localhost ~]# echo "a=$a"
+a=5
+[root@localhost ~]# echo 'a=$a'
+a=$a
+```
+
+# 設定環境變數
+* vim .bashrc 在最後一行加上 export PATH=$PATH:/root/bin
+* source .bashrc 就成功了
+
+
 # 雜記
 * ifconfig [介面卡] 0 清除兩張網卡的設定
