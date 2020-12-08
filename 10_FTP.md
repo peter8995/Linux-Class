@@ -20,6 +20,8 @@ local: b3 remote: b3
 227 Entering Passive Mode (192,168,23,137,136,130).
 150 Ok to send data.
 ```
+* mget 批次下載
+```
 ftp> mget a*
 local: a1 remote: a1
 227 Entering Passive Mode (192,168,23,137,117,227).
