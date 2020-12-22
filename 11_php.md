@@ -71,7 +71,7 @@ Alias /data /opt/docs
 * AllowOverride All 允許子目錄自訂選項
 * AllowOverride None 允許子目錄自訂選項
 * AllowOverride 選項清單 AllowOverride Indexes []
-#### 增加帳號密碼驗證
+### 增加帳號密碼驗證
 * vim /etc/httpd/conf/httpd.conf
 ```
 Alias /data /opt/docs
@@ -94,5 +94,51 @@ Require valid-user
 ```
 * htpasswd -c .htpasswd [mary]
 * systemctl restart httpd
-
-
+### [虛擬主機](https://www.opencli.com/linux/rhel-centos-setup-apache-virtual-hosts)
+* 先創立兩個document root
+   * mkdir /var/www/website01.com
+   * mkdir /var/www/website02.com
+* 建立存放紀錄檔的目錄
+   * mkdir /var/log/httpd/website02.com
+   * mkdir /var/log/httpd/website01.com
+* cd /var/www/website02.com
+* vim index.php
+```
+<html>
+    <head>
+    <title>Welcome to <?php echo $_SERVER['HTTP_HOST']?></title>
+    </head>
+<body>
+<?php echo $_SERVER['HTTP_HOST']?>
+</body>
+</html>
+```
+* cd ../website01.com/
+* vim index.php 同上
+* 調整擁有者chown -R apache:apache /var/www/website0*
+* vi /etc/httpd/conf.d/website01.com.conf
+```
+<VirtualHost *:80>
+    ServerName website01.com
+    ServerAlias www.website01.com
+    DocumentRoot /var/www/website01.com
+    CustomLog /var/log/httpd/website01.com/access.log common
+    ErrorLog /var/log/httpd/website01.com/error.log
+</VirtualHost>
+```
+* vi /etc/httpd/conf.d/website02.com.conf
+```
+<VirtualHost *:80>
+    ServerName website02.com
+    ServerAlias www.website02.com
+    DocumentRoot /var/www/website02.com
+    CustomLog /var/log/httpd/website02.com/access.log common
+    ErrorLog /var/log/httpd/website02.com/error.log
+</VirtualHost>
+```
+* systemctl restart httpd
+* 修改windows文件 C:\Windows\System32\drivers\etc 的host檔案
+```
+192.168.23.137    www.website01.com
+192.168.23.137    www.website02.com
+```
