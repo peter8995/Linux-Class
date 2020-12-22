@@ -142,3 +142,20 @@ Require valid-user
 192.168.23.137    www.website01.com
 192.168.23.137    www.website02.com
 ```
+# 手動配置ip
+* cd /etc/sysconfig/network-scripts/
+* vim ifcfg-ens33
+```
+TYPE=Ethernet
+ONBOOT=yes
+DEVICE=ens33
+BOOTPROTO=static
+IPADDR=192.168.23.137
+GATEWAY=192.168.23.2
+NETWORK=192.168.23.0
+NETMASK=255.255.255.0
+DNS1=8.8.8.8
+DNS2=1.1.1.1
+```
+* systemctl stop NetworkManager
+* systemctl restart network
