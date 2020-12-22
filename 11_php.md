@@ -40,3 +40,30 @@ Alias /data /opt/docs
   Require all granted   -->http://192.168.23.137/data/docs.html
 </Directory>
 ```
+### 限制ip存取
+* vim httpd.conf
+* 只有192.168.23.1不可存取
+```
+Alias /data /opt/docs
+<Directory /opt/docs>
+  Options Indexes
+  Require all granted
+
+  Order allow,deny
+  Allow from all
+  Deny from 192.168.23.1
+</Directory>
+```
+* vim httpd.conf
+* 只有192.168.23.1可存取
+```
+Alias /data /opt/docs
+<Directory /opt/docs>
+  Options Indexes
+  Require all granted
+
+  Order deny,allow
+  Allow from 192.168.23.1
+  Deny from all
+</Directory>
+```
