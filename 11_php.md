@@ -32,7 +32,7 @@ UserDir enabled
 ## data資料夾
 * 在/opt資料夾下新增docs資料夾 mkdir /opt/docs
 * echo "docs" > /docs/docs.html
-* vim httpd.conf
+* vim /etc/httpd/conf/httpd.conf
 ```
 Alias /data /opt/docs
 <Directory /opt/docs>
@@ -41,7 +41,7 @@ Alias /data /opt/docs
 </Directory>
 ```
 ### 限制ip存取
-* vim httpd.conf
+* vim /etc/httpd/conf/httpd.conf
 * 只有192.168.23.1不可存取
 ```
 Alias /data /opt/docs
@@ -67,3 +67,32 @@ Alias /data /opt/docs
   Deny from all
 </Directory>
 ```
+### 允許子目錄自訂選項
+* AllowOverride All 允許子目錄自訂選項
+* AllowOverride None 允許子目錄自訂選項
+* AllowOverride 選項清單 AllowOverride Indexes []
+#### 增加帳號密碼驗證
+* vim /etc/httpd/conf/httpd.conf
+```
+Alias /data /opt/docs
+<Directory /opt/docs>
+  Options Indexes
+  Require all granted
+  AllowOverride AuthConfig
+  Order deny,allow
+  Allow from 192.168.23.1
+  Deny from all
+</Directory>
+```
+* ls /opt/docs
+* vim /opt/docs/.htaccess
+```
+AuthType Basic
+AuthName "Private File Area"
+AuthUserFile /opt/docs/.htpasswd
+Require valid-user
+```
+* htpasswd -c .htpasswd [mary]
+* systemctl restart httpd
+
+
