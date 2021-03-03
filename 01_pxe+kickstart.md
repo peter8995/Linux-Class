@@ -1,4 +1,4 @@
-# 大量安裝
+# [大量安裝 PXE&kstart1](https://www.cnblogs.com/zhangxingeng/p/9560221.html) [大量安裝 PXE&kstart2](https://linux.onlinedoc.tw/2016/05/centos7rhel7-pxe.html)
 * 安裝新的一台虛擬機 ram:2048mb rom:50gb [bootorder:1.Network 2.Hard Disk](https://xx3d2ybnf.pixnet.net/blog/post/128713507) 網卡只用lansegment
 * 一台已經安裝好之虛擬機 NAT HOSTONLY INTERNAL/ lan segment
 * 利用 yum 安裝 tftp Server、DHCP Server、Vsftp Server 以及 syslinux 等套件：
