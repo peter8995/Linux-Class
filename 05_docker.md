@@ -28,6 +28,8 @@ httpd        latest    ae15ff2bdcb4   2 weeks ago   138MB
 ```
 * docker ps 查看正在執行的docker
   * docker ps -a 包含已經死掉的docker
+  * 若要完全移除 docker rm [id/names]
+* docker stop [id/names]
 
 ## httpd
 * docker pull httpd
