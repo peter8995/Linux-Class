@@ -1,4 +1,8 @@
 # rsync
+## 使用模式
+1. shell 模式：本地複製功能
+2. 遠程shell功能：利用ssh實現數據的加密傳輸到遠程主機
+3. 服務器模式：rsync工作在Daemon模式下
 * 先建立免密碼ssh登入
 * ssh-keygen 
 * ssh-copy-id [第二台主機ip]
@@ -53,4 +57,7 @@ test/5.txt
 
 1 directory, 5 files
 ```
+* 修改已存在檔案內容或新增檔案不需要加--delete
+* 刪除檔案或是檔案改名且要完全同步則要加上--delete
+* 
 
