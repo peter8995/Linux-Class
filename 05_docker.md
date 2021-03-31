@@ -30,12 +30,19 @@ httpd        latest    ae15ff2bdcb4   2 weeks ago   138MB
   * docker ps -a 包含已經死掉的docker
   * 若要完全移除 docker rm [id/names]
 * docker stop [id/names]
+* docker exec -it [id] bash 進入容器內
+* docker commit [id] 新鏡像名稱:tag
+* 上傳docker名稱規則 ip(docker hub可省略)/帳號/鏡像:tag
+* docker tag 鏡像:tag 新鏡像名稱:tag 重新命名
+* docker login
+* docker push 上傳鏡像
 
 ## httpd
 * docker pull httpd
 * docker run -itd -p 8080:80 httpd
 * 在8080阜開docker的httpd server
 * 打開電腦連192.168.175.128:8080
+
 ## echo
 ```
 [root@localhost ~]# docker run -it ubuntu echo "hi"
@@ -43,3 +50,23 @@ hi
 [root@localhost ~]# docker run -it ubuntu:18.04 echo "hi"
 hi
 ```
+
+# dockerfile
+* mkdir test-dockerfile
+* cd test-dockerfile/
+* vim Dockerfile
+```
+[root@localhost test-dockerfile]# cat Dockerfile
+FROM centos:centos7
+RUN yum -y install httpd
+EXPOSE 80
+ADD index.html /var/www/html
+```
+* echo "hi" > index.html
+* docker build -t centos:web1.0 .
+* docker run -d -p 8083:80 centos:web1.0 /usr/sbin/apachectl -DFOREGROUND
+* curl 127.0.0.1:8083
+
+
+
+
