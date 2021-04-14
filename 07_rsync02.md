@@ -30,3 +30,4 @@ secrets file = /backup/rsync.passwd
 * 輸入密碼就可以
 * 權限要更改為 600 chmod 600 /etc/rsync.passwd
 * rsync -avz /home/user/a vuser1@[ip]::mod1 --password-file=/etc/rsync.passwd
+
