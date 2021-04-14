@@ -1,0 +1,33 @@
+. /etc/rc.d/init.d/functions
+
+exec="/usr/bin/rsync"
+prog="rsync"
+config="/etc/rsyncd.conf"
+lockfile="/var/lock/subsys/$prog"
+OPTS="--daemon"
+
+if [[ $1 == "start" ]];then
+  [ -x $exec ] || exit 5
+  [ -f $config ] || exit 6
+  echo -n "Starting $prog: "
+  daemon $exec $OPTS
+  retval=$?
+  echo 
+  [ $retval -eq 0 ] && touch $lockfile
+
+elif [[ $1 == "stop" ]];then
+  echo -n "Stopping $prog:"
+  killproc $exec
+  RETVAL=3
+  retval=$?
+  [ $retval -eq 0 ] && rm -f $lockfile
+
+elif [[ $1 == "status" ]];then
+  status $prog
+
+else
+  echo $"Usage: $0 (start|stop|status)"
+  exit 2
+fi
+
+
