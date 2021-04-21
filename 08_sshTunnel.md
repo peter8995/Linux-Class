@@ -22,5 +22,14 @@
 * 第二、三台ssh
 * 第一台電腦 ssh -Nf -R 192.168.2.1:6666:192.168.1.2:80 user@192.168.2.1
 * 第三台curl 127.0.0.1:6666
+## 連到其它伺服器 浮動ip
+* 新增第四台電腦 lan segement2
+* ip 192.168.10.2
+* 第四台ip route del default 全部刪掉
+* ip route add default via 192.168.2.2
+* 開啟http server
+* 第二、三台開啟SSH server
+* 第一台電腦輸入 ssh -Nf -D 127.0.0.1:7777 user@192.168.2.1
+* 瀏覽器內修改proxy socks host 127.0.0.1:7777
 ## 簡易http server
 * python -m SimpleHTTPServer
