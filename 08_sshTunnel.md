@@ -13,5 +13,14 @@
 * 第二台電腦要打開ssh server
 * 第三台電腦要有httpserver
 * ssh -Nf -L 5557:192.168.2.1:80 user@192.168.1.2
+## 反向
+* 第一台ip route del default 全部刪掉
+* ip route add default via 192.168.1.2
+* 第三台ip route del default 全部刪掉
+* ip route add default via 192.168.2.2
+* 第一台開http server
+* 第二、三台ssh
+* 第一台電腦 ssh -Nf -R 192.168.2.1:6666:192.168.1.2:80 user@192.168.2.1
+* 第三台curl 127.0.0.1:6666
 ## 簡易http server
 * python -m SimpleHTTPServer
