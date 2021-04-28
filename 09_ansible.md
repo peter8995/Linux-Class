@@ -81,4 +81,40 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 * ansible-doc yum 可以看解釋文件
 * ansible server2 -m yum -a "name=httpd,tree state=latest" 安裝
 * ansible server2 -m yum -a "name=httpd,tree state=abstnt" 解除安裝
+## script 模塊
+* vim showip.sh
+```
+#!/usr/bin/bash
+
+ip=`ifconfig ens33 | grep inet | grep -v inet6 | awk '{print $2}'`
+
+echo $ip
+```
+* ansible webservers -m script -a "./showip.sh"
+```
+192.168.175.135 | CHANGED => {
+    "changed": true,
+    "rc": 0,
+    "stderr": "Shared connection to 192.168.175.135 closed.\r\n",
+    "stderr_lines": [
+        "Shared connection to 192.168.175.135 closed."
+    ],
+    "stdout": "192.168.175.135\r\n",
+    "stdout_lines": [
+        "192.168.175.135"
+    ]
+}
+192.168.175.134 | CHANGED => {
+    "changed": true,
+    "rc": 0,
+    "stderr": "Shared connection to 192.168.175.134 closed.\r\n",
+    "stderr_lines": [
+        "Shared connection to 192.168.175.134 closed."
+    ],
+    "stdout": "192.168.175.134\r\n",
+    "stdout_lines": [
+        "192.168.175.134"
+    ]
+}
+```
 
