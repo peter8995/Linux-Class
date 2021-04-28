@@ -202,6 +202,25 @@ echo $ip
     "uid": 1000
 }
 ```
-
+## file模塊
+* 創造一個aaa資料夾 ansible server2 -m file -a "path=/tmp/aaa state=directory"
+```
+[root@centos7-1 test-ansible]# ansible server2 -m file -a "path=/tmp/aaa state=directory"
+192.168.175.134 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/tmp/aaa",
+    "size": 6,
+    "state": "directory",
+    "uid": 0
+}
+```
+* 
 
 
