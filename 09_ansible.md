@@ -1,4 +1,4 @@
-# ansible
+# [ansible](https://www.xuliangwei.com/oldxu/1247.html)
 * 三台電腦
 * 2 3台只需要開啟ssh server
 * 第一台 ssh-keygen
@@ -117,4 +117,91 @@ echo $ip
     ]
 }
 ```
+## copy 模塊
+* ansible server2 -m copy -a "src=./httpd.conf dest=/tmp/a.conf"
+```
+[root@centos7-1 test-ansible]# ansible server2 -m copy -a "src=./httpd.conf dest=/tmp/a.conf"
+192.168.175.134 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "checksum": "fdb1090d44c1980958ec96d3e2066b9a73bfda32",
+    "dest": "/tmp/a.conf",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "f5e7449c0f17bc856e86011cb5d152ba",
+    "mode": "0644",
+    "owner": "root",
+    "size": 11753,
+    "src": "/root/.ansible/tmp/ansible-tmp-1619581230.44-5491-125369788383308/source",
+    "state": "file",
+    "uid": 0
+}
+```
+* 備份ansible server2 -m copy -a "src=./httpd.conf dest=/tmp/a.conf backup=yes"
+```
+[root@centos7-1 test-ansible]# ansible server2 -m copy -a "src=./httpd.conf dest=/tmp/a.conf backup=yes"
+192.168.175.134 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "backup_file": "/tmp/a.conf.5167.2021-04-28@11:42:25~",
+    "changed": true,
+    "checksum": "d9871913fc956d280523f4f1ed9fb6f71ca2f2dc",
+    "dest": "/tmp/a.conf",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "9bad1f73aa65243ef2b68191954a45b2",
+    "mode": "0644",
+    "owner": "root",
+    "size": 11755,
+    "src": "/root/.ansible/tmp/ansible-tmp-1619581344.38-5555-77999032343133/source",
+    "state": "file",
+    "uid": 0
+}
+```
+* 直接丟文字 ansible server2 -m copy -a "content='This is an apple.' dest=b.txt"
+```
+[root@centos7-1 test-ansible]# ansible server2 -m copy -a "content='This is an apple.' dest=b.txt"
+192.168.175.134 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "checksum": "257e094683b7da61416ec54999394c4738f264f9",
+    "dest": "./b.txt",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "b37820c8d302d977dfb0951e98716890",
+    "mode": "0644",
+    "owner": "root",
+    "size": 17,
+    "src": "/root/.ansible/tmp/ansible-tmp-1619581483.22-5602-190940625889186/source",
+    "state": "file",
+    "uid": 0
+}
+```
+* 新增權限 擁有者 ansible server2 -m copy -a "content='This is an apple.' dest=b.txt owner=user group=user mode=666"
+```
+[root@centos7-1 test-ansible]# ansible server2 -m copy -a "content='This is an apple.' dest=b.txt owner=user group=user mode=666"
+192.168.175.134 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "checksum": "257e094683b7da61416ec54999394c4738f264f9",
+    "dest": "b.txt",
+    "gid": 1000,
+    "group": "user",
+    "mode": "0666",
+    "owner": "user",
+    "path": "b.txt",
+    "size": 17,
+    "state": "file",
+    "uid": 1000
+}
+```
+
+
 
