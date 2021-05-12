@@ -409,3 +409,38 @@ echo $ip
     "uid": 888
 }
 ```
+## playbook
+* vim playbook.yml
+```
+- hosts: server1
+  tasks:
+    - name: install httpd server
+      yum: name=httpd state=present
+
+    - name: configure httpd server
+      copy: src=./httpd.conf dest=/etc/httpd/conf/httpd.conf
+
+    - name: start httpd server
+      service: name=httpd state=restarted enabled=yes
+```
+* ansible-playbook playbook.yml
+```
+[root@centos7-1 example1]# ansible-playbook playbook.yml
+\
+PLAY [server1] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.175.135]
+
+TASK [install httpd server] ****************************************************
+ok: [192.168.175.135]
+
+TASK [configure httpd server] **************************************************
+changed: [192.168.175.135]
+
+TASK [start httpd server] ******************************************************
+changed: [192.168.175.135]
+
+PLAY RECAP *********************************************************************
+192.168.175.135            : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
