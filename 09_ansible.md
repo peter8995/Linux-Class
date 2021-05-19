@@ -444,3 +444,91 @@ changed: [192.168.175.135]
 PLAY RECAP *********************************************************************
 192.168.175.135            : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+* 加入handlers
+```
+- hosts: server1
+  tasks:
+    - name: install httpd server
+      yum: name=httpd state=present
+
+    - name: configure httpd server
+      copy: src=./httpd.conf dest=/etc/httpd/conf/httpd.conf
+      notify: restart httpd server
+
+    - name: start httpd server
+      service: name=httpd state=restarted enabled=yes
+
+  handlers:
+    - name: restart httpd server
+      service: name=httpd state=restarted
+```
+* ansible-playbook playbook.yml
+```
+[root@centos7-1 example1]# ansible-playbook playbook.yml
+
+PLAY [server1] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.175.135]
+
+TASK [install httpd server] ****************************************************
+ok: [192.168.175.135]
+
+TASK [configure httpd server] **************************************************
+changed: [192.168.175.135]
+
+TASK [start httpd server] ******************************************************
+changed: [192.168.175.135]
+
+RUNNING HANDLER [restart httpd server] *****************************************
+changed: [192.168.175.135]
+
+PLAY RECAP *********************************************************************
+192.168.175.135            : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+* nfs server
+* vim playbool.yml
+```
+- hosts: server1
+  tasks:
+    - name: install nfs server
+      yum: name=nfs-utils state=present
+
+    - name: configure nfs server step
+      copy: src=./exports.j2 dest=/etc/exports backup=yes
+
+    - name: create nfs group
+      group: name=mynfs gid=666
+
+    - name: create nfs user
+      user: name=mynfs uid=666 group=666 shell=/sbin/nologin create_home=no
+
+    - name: create nfs data
+      file: path=/data state=directory owner=mynfs group=mynfs recurse=yes
+
+    - name: start nfs server
+      service: name=nfs state=restarted enabled=yes
+
+- hosts: server1
+  tasks:
+    - name: install nfs software
+      yum: name=nfs-utils state=present
+
+    - name: client create nfs data
+      file: path=/test-nfs state=directory
+
+    - name: client mount nfs server
+      mount:
+        src: 192.168.175.135:/data
+        path: /test-nfs
+        fstype: nfs
+        opts: defaults
+        state: mounted
+```
+* vim exports.j2
+```
+/data/  192.168.175.0/24(rw,sync,no_root_squash,no_all_squash)
+```
+* ansible-playbook playbook.yml
+* ![image](https://user-images.githubusercontent.com/47874887/118743861-cc23ee00-b885-11eb-9cc5-8bf5e2603d34.png)
+
