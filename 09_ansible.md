@@ -444,7 +444,7 @@ changed: [192.168.175.135]
 PLAY RECAP *********************************************************************
 192.168.175.135            : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-* 加入handlers
+### 加入handlers
 ```
 - hosts: server1
   tasks:
@@ -486,7 +486,7 @@ changed: [192.168.175.135]
 PLAY RECAP *********************************************************************
 192.168.175.135            : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-* nfs server
+### nfs server
 * vim playbool.yml
 ```
 - hosts: server1
@@ -551,4 +551,75 @@ app1: wget
 app2: gedit
 ```
 * ansible-playbook playbook.yml
+* vim playbook.yml
+```
+- hosts: 192.168.79.114
+  tasks:
+    - name: install {{ app1 }} and {{ app2 }}
+      yum:
+        name:
+          - "{{ app1 }}"
+          - "{{ app2 }}"
+        state: present
 
+- hosts: 192.168.79.115
+  tasks:
+    - name: install {{ app1 }} and {{ app2 }}
+      yum:
+        name:
+          - "{{ app1 }}"
+          - "{{ app2 }}"
+        state: present
+```
+```
+[root@centos7-1 example5]# tree
+.
+├── group_vars
+├── host_vars
+│   ├── 192.168.175.134
+│   └── 192.168.175.135
+└── playbook.yml
+```
+* 兩個ip檔案放入
+```
+app1: httpd
+app2: vsftpd
+
+app1: wget
+app2: curl
+```
+* ansible-playbook playbook.yml
+### 詳細資料
+* vim playbook.yml
+```
+- hosts: server1
+  tasks:
+    - name: install httpd server
+      yum: name=httpd state=present
+
+    - name: configure httpd server
+      copy: src=./httpd.conf dest=/etc/httpd/conf/httpd.conf
+      notify: restart httpd server
+
+    - name: start httpd server
+      service: name=httpd state=started enabled=yes
+
+    - name: Check httpd server
+      shell: ps aux|grep httpd
+      register: check_httpd
+    
+    - name: output variable
+      debug:
+        msg: "{{ check_httpd }}"
+
+  handlers:
+    - name: restart httpd server
+      service: name=httpd state=restarted
+```
+```
+[root@centos7-1 example6]# tree
+.
+├── httpd.conf
+└── playbook.yml
+```
+* ansible-playbook playbook.yml
