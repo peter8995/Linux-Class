@@ -531,4 +531,24 @@ PLAY RECAP *********************************************************************
 ```
 * ansible-playbook playbook.yml
 * ![image](https://user-images.githubusercontent.com/47874887/118743861-cc23ee00-b885-11eb-9cc5-8bf5e2603d34.png)
+### 變數
+* vim playbook.yml
+```
+- hosts: server1
+  vars_files: ./vars_public.yml
+
+  tasks:
+    - name: install {{ app1 }} and {{ app2 }}
+      yum:
+        name:
+          - "{{ app1 }}"
+          - "{{ app2 }}"
+        state: present
+```
+* vim vars_public.yml
+```
+app1: wget
+app2: gedit
+```
+* ansible-playbook playbook.yml
 
