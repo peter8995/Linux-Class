@@ -623,3 +623,5 @@ app2: curl
 └── playbook.yml
 ```
 * ansible-playbook playbook.yml
+![image](https://user-images.githubusercontent.com/47874887/118752321-722b2480-b895-11eb-8fe3-eefd60e362c0.png)
+
