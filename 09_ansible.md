@@ -625,3 +625,84 @@ app2: curl
 * ansible-playbook playbook.yml
 ![image](https://user-images.githubusercontent.com/47874887/118752321-722b2480-b895-11eb-8fe3-eefd60e362c0.png)
 
+### 安裝memory chche
+* 用來存放資料庫內的東西->資料存放在記憶體的資料庫
+* 讀取速度快
+* yum install memcached
+* vim playbook.yml
+```
+- hosts: webservers
+  tasks:
+    - name: install memcached server
+      yum: name=memcached state=present
+
+    - name: configure memcached server
+      template: src=./memcached.j2 dest=/etc/sysconfig/memcached
+
+    - name: service memcached server
+      service: name=memcached state=started enabled=yes
+
+    - name: check memcached server
+      shell: ps aux | grep memcached
+      register: check_mem
+
+    - name: debug memcached variables
+      debug:
+        msg: "{{ check_mem.stdout_lines }}"
+```
+* cp /etc/sysconfig/memcached memcached.j2
+* vim memcached.j2
+```
+PORT="11211"
+USER="memcached"
+MAXCONN="1024"
+CACHESIZE="{{ ansible_memtotal_mb // 2 }}"
+OPTIONS=""
+```
+* ansible-playbook playbook.yml
+```
+[root@centos7-1 example7]# ansible-playbook playbook.yml
+
+PLAY [webservers] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.175.134]
+ok: [192.168.175.135]
+
+TASK [install memcached server] ************************************************
+ok: [192.168.175.134]
+changed: [192.168.175.135]
+
+TASK [configure memcached server] **********************************************
+ok: [192.168.175.134]
+changed: [192.168.175.135]
+
+TASK [service memcached server] ************************************************
+ok: [192.168.175.134]
+changed: [192.168.175.135]
+
+TASK [check memcached server] **************************************************
+changed: [192.168.175.134]
+changed: [192.168.175.135]
+
+TASK [debug memcached variables] ***********************************************
+ok: [192.168.175.134] => {
+    "msg": [
+        "memcach+   2996  0.0  0.1 344100  1688 ?        Ssl  09:42   0:00 /usr/bin/memcached -u memcached -p 11211 -m 486 -c 1024",
+        "root       3481  0.0  0.1 113284  1196 pts/0    S+   09:44   0:00 /bin/sh -c ps aux | grep memcached",
+        "root       3483  0.0  0.0 112812   952 pts/0    S+   09:44   0:00 grep memcached"
+    ]
+}
+ok: [192.168.175.135] => {
+    "msg": [
+        "memcach+   3112  0.0  0.0 344100  1692 ?        Ssl  09:44   0:00 /usr/bin/memcached -u memcached -p 11211 -m 909 -c 1024",
+        "root       3182  0.0  0.0 113284  1196 pts/0    S+   09:44   0:00 /bin/sh -c ps aux | grep memcached",
+        "root       3184  0.0  0.0 112812   952 pts/0    S+   09:44   0:00 grep memcached"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+192.168.175.134            : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+192.168.175.135            : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+* 
