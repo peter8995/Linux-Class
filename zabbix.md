@@ -21,6 +21,20 @@
 * 設定密碼、資料庫名稱為zabbix
 * 使用Admin/zabbix 登入
 
+* 用來監控 也可以監控cisco server
+## 第二台主機
+* rpm -Uvh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.el7.noarch.rpm
+* yum install -y zabbix-agent
+* systemctl start zabbix-agent
+* systemctl enable zabbix-agent
+* vim /etc/zabbix/zabbix_agentd.conf
+* 修改server ip 還有active server ip 為server id
+* 修改hostname (自訂)
+![image](https://user-images.githubusercontent.com/47874887/121304960-98d9f980-c92f-11eb-95cf-5f904dcb1a25.png)
+![image](https://user-images.githubusercontent.com/47874887/121305091-bf983000-c92f-11eb-897c-a04c2917f19a.png)
+
+
+
 
 
 # 執行腳本的四種方法
