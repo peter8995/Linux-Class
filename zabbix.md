@@ -32,6 +32,12 @@
 * 修改hostname (自訂)
 ![image](https://user-images.githubusercontent.com/47874887/121304960-98d9f980-c92f-11eb-95cf-5f904dcb1a25.png)
 ![image](https://user-images.githubusercontent.com/47874887/121305091-bf983000-c92f-11eb-897c-a04c2917f19a.png)
+* vim /etc/zabbix/zabbix_agentd.conf
+* UserParameter=check_users, who | wc -l
+* [root@centos7-1 home]# zabbix_get -s 192.168.175.135 -p 10050 -k "check_users"
+1
+* 回到網頁 configuration -> Hosts -> create item
+![image](https://user-images.githubusercontent.com/47874887/121309337-a5ad1c00-c934-11eb-9eff-34d3752a6cc5.png)
 
 
 
