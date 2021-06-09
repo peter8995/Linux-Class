@@ -22,7 +22,7 @@
 * 使用Admin/zabbix 登入
 
 * 用來監控 也可以監控cisco server
-## 第二台主機
+## [第二台主機](https://tw511.com/a/01/21076.html)
 * rpm -Uvh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.el7.noarch.rpm
 * yum install -y zabbix-agent
 * systemctl start zabbix-agent
